@@ -1,24 +1,20 @@
-# README
+# React Rails Sample Program
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+## Initial Setup
 
-Things you may want to cover:
+1. `rails new reactrails6 --webpack=react --skip-coffee --skip-sprockets`
+2. `cd reactrails6`
+3. `bundle add react-rails`
+4. `yarn add react_ujs reactstrap bootstrap`
+7. `yarn check`
+8. `bin/rails generate react:install`
+9. Edit the `config/initializers/content_security_policy.rb` file and uncomment the line that starts with `policy.connect_src`
 
-* Ruby version
+## Donations Setup
 
-* System dependencies
+Our little sample program will setup a simple form and resource for accepting
+charity donations.
 
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+1. `bin/rails g scaffold Donations charity:string amount:float`
+2. Run `webpacker-dev-server` in a separate terminal session.
+3. `bin/rails db:migrate`
