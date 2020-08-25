@@ -67,8 +67,8 @@ elements.
       render () {
         return (
           <React.Fragment>
-              <Navbar color="light" light expand="md">
-                <NavbarBrand href="/">reactstrap</NavbarBrand>
+              <Navbar color="dark" dark expand="md">
+                <NavbarBrand color="white" href="/">reactstrap</NavbarBrand>
                 <NavbarToggler onClick={this.toggle} />
                 <Collapse isOpen={this.state.isOpen} navbar>
                   <Nav className="ml-auto" navbar>
@@ -116,37 +116,120 @@ elements.
     </body>
    ```
 
-5. Add bootstrap CSS to *app/javascript/packs/application.js*
+5. Add bootstrap CSS to *app/javascript/packs/application.js* this will cause
+   webpacker to compile and include the CSS into a webpack.
    ```
     // Pull in the bootstrap css styles
     import 'bootstrap/dist/css/bootstrap.min.css'
    ```
 
-6. We create `CharitySelector.jsx`
+6. Now let's create a small component for collecting the amout of the
+   contribution. Create a file *app/javascript/components/SimpleAmountType.jsx*
+   with the contents:
    ```
-   import React from 'react'
+    import React from 'react'
 
-   class CharitySelector extends React.Component {
+    class SimpleAmountType extends React.Component {
       render() {
-        return (
+        return(
           <div className="field">
-            <label htmlFor="order_pay_type">Charity</label>​ 
-            <select id="charity" name="donation[charity]">
-              <option value="">Select your favorite charity</option>​ 
-              <option value="habitat">Habitat for Humanity</option>​ 
-              <option value="unicef">Unicef</option>​ 
-              <option value="cancer_society">American Cancer Society</option>​ 
-            </select>​ 
+            <label>Amount: </label>
+            <input type="text" name="donation[amount]"></input>
           </div>
         );
       }
-   }
-   export default CharitySelector
+    }
+
+    export default SimpleAmountType
    ```
 
-5. Update the *app/views/donations/_form.html.erb* by removing the charity
+7. We will next create a component that does *not* any payment information.
+   This component should go in *app/javascript/components/NoPayType.jsx* with
+   the following components:
+   ```
+    import React from 'react'
+
+    class NoPayType extends React.Component {
+      render() {
+        return(<div></div>);
+      }
+    }
+
+    export default NoPayType
+   ```
+
+8. We create `CharitySelector.jsx` to use the other components that we created
+   previously. The comments in the code segment explain the actions that will
+   be taken.
+   ```
+    import React from 'react'
+    import NoPayType from './NoPayType'
+    import SimpleAmountType from './SimpleAmountType'
+
+    class CharitySelector extends React.Component {
+      // Add a contsturctor and bind
+      constructor(props) {
+        super(props);
+        this.onCharitySelected = this.onCharitySelected.bind(this);
+
+        // Initialize the state variable
+        this.state = {selectedCharity: "none"};
+      }
+
+      onCharitySelected(event) {
+        // Event handler to change the state to the selected charity
+        // see the select element in the render function below.
+        this.setState({selectedCharity: event.target.value});
+        console.log(event.target.value);
+      }
+
+      render() {
+        // Initialize the payment component to the NoPayType so no amount is field
+        // is shown to the user.
+        let PaymentAmountTypeComponent = NoPayType;
+
+        if (this.state.selectedCharity != "none") {
+          // If the state has changed to a type of payment, then we display
+          // the SimpleAmountType component.
+          PaymentAmountTypeComponent = SimpleAmountType;
+        }
+
+        return (
+          <div>
+            <div className="field">
+              <label htmlFor="order_pay_type">Charity</label>​ 
+              <select id="charity" onChange={this.onCharitySelected} name="donation[charity]">
+                <option value="none">Select your favorite charity</option>​ 
+                <option value="habitat">Habitat for Humanity</option>​ 
+                <option value="unicef">Unicef</option>​ 
+                <option value="cancer_society">American Cancer Society</option>​ 
+              </select>​ 
+            </div>
+
+            <PaymentAmountTypeComponent />
+          </div>
+        );
+      }
+    }
+    export default CharitySelector
+   ```
+
+9. Update the *app/views/donations/_form.html.erb* by removing the charity
    field and adding the react component.
    ```
     <%= react_component("CharitySelector") %>
    ```
+
+10. Now let's do some cleanup. Since we are loading stylesheets with webpacker
+    and not the asset pipeline, we can update the
+    *app/views/layout/application.html.erb file.* to remove:
+    ```
+    <%= stylesheet_link_tag 'application', media: 'all' data-turbolinks-track': 'reload' %>
+
+    and add:
+
+    <%= stylesheet_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+    ```
+
+
 

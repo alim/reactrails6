@@ -33,8 +33,8 @@ class SampleNavBar extends React.Component {
   render () {
     return (
       <React.Fragment>
-          <Navbar color="light" light expand="md">
-            <NavbarBrand href="/">reactstrap</NavbarBrand>
+          <Navbar color="dark" dark expand="md">
+            <NavbarBrand color="white" href="/">reactstrap</NavbarBrand>
             <NavbarToggler onClick={this.toggle} />
             <Collapse isOpen={this.state.isOpen} navbar>
               <Nav className="ml-auto" navbar>
