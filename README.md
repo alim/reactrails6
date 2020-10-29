@@ -231,5 +231,5 @@ elements.
     <%= stylesheet_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
     ```
 
-
+11. Adding Github Actions
 
