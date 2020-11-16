@@ -16,6 +16,3 @@ jobs:
 #    - run: yarn install --check-files
 #    - run: bin/rake db:migrate
     - run: rails test
-      working-directory: ./bin
-
-
