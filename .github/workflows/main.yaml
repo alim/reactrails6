@@ -16,4 +16,6 @@ jobs:
 #    - run: yarn install --check-files
 #    - run: bin/rake db:migrate
 #    - run: rails test
-    - run: find / -name rails 2>/dev/null -print
+#    - run: find / -name rails 2>/dev/null -print
+# /home/runner/work/reactrails6/reactrails6/vendor/bundle/ruby/2.7.0/bin/rails
+    - run: $GITHUB_WORKSPACE/vendor/bundle/ruby/2.7.0/bin/rails test
