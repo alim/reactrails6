@@ -12,5 +12,5 @@ jobs:
 #    - run: bundle install # bundle exec rake
 #    - run: yarn install --check-files
 #    - run: bin/rake db:migrate
-     - run: bin/rails test
+     - run: rails test
 
