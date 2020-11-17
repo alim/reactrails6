@@ -10,14 +10,8 @@ jobs:
         ruby-version: 2.7.2 # Not needed with a .ruby-version file
         bundler-cache: true # runs 'bundle install' and caches installed gems automatically
 # oh my god, the number of spaces before - is important (must be 4)
-#    - run: pwd
-#    - run: echo hello world
-#    - run: bundle install # bundle exec rake
-#    - run: yarn install --check-files
-#    - run: bin/rake db:migrate
-#    - run: rails test
-#    - run: find / -name rails 2>/dev/null -print
-#    - run: find $GITHUB_WORKSPACE -name rails 2>/dev/null -print
-# /home/runner/work/reactrails6/reactrails6/vendor/bundle/ruby/2.7.0/bin/rails
+#    - run: bundle exec rake #from the ruby-setup code. do not use
+# this updated webpacker
     - run: yarn install --check-files
-    - run: $GITHUB_WORKSPACE/bin/rails test
+# now I can run the test
+    - run: bin/rails test
