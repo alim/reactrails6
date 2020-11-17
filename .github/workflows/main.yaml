@@ -19,4 +19,5 @@ jobs:
 #    - run: find / -name rails 2>/dev/null -print
 #    - run: find $GITHUB_WORKSPACE -name rails 2>/dev/null -print
 # /home/runner/work/reactrails6/reactrails6/vendor/bundle/ruby/2.7.0/bin/rails
+    - run: yarn install --check-files
     - run: $GITHUB_WORKSPACE/bin/rails test
